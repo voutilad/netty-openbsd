@@ -277,7 +277,12 @@ public final class NetUtil {
                             tmp = sysctlGetInt("kern.ipc.somaxconn");
                             if (tmp == null) {
                                 tmp = sysctlGetInt("kern.ipc.soacceptqueue");
-                                if (tmp != null) {
+                                if (tmp == null) {
+                                    tmp = sysctlGetInt("kern.somaxconn");
+                                    if (tmp != null) {
+                                        somaxconn = tmp;
+                                    }
+                                } else {
                                     somaxconn = tmp;
                                 }
                             } else {
